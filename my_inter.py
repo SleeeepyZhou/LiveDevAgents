@@ -8,7 +8,6 @@ from camel.types import ModelPlatformType, ModelType
 from camel.configs import QwenConfig
 import os
 import sys
-import tempfile
 import pygame
 import multiprocessing
 
@@ -18,7 +17,6 @@ PYGAME_FILE = os.path.join(CURRENT_DIR, 'pygame_current.py')
 
 def create_agent():
     """创建一个新的agent实例"""
-    #Rex的hackathon临时token
     model = ModelFactory.create(
         model_platform=ModelPlatformType.QWEN,
         model_type=ModelType.QWEN_TURBO,
@@ -48,44 +46,86 @@ def run_pygame_file(file_path):
     python = sys.executable
     os.system(f'{python} {file_path}')
 
+def kill_pygame():
+    """终止所有pygame相关的进程"""
+    if sys.platform == 'darwin':  # macOS
+        os.system("pkill -f pygame_current.py")
+
 class MyInterpreter(SubprocessInterpreter):
     def __init__(self):
         super().__init__(require_confirm=False, print_stdout=True, print_stderr=True)
-        self.stored_code = """
+        self.initial_code = """
 # 初始化pygame
 pygame.init()
 
-# 创建窗口
-screen = pygame.display.set_mode((800, 600))
+# 创建窗口（添加NOFRAME标志使窗口始终在最前面）
+screen = pygame.display.set_mode((800, 600), pygame.NOFRAME)
 pygame.display.set_caption("Pygame Window")
+
+# 添加拖动功能变量
+dragging = False
+drag_offset_x = 0
+drag_offset_y = 0
 """
-        self.current_process = None  # 保存当前运行的进程
+        # 如果pygame文件存在，读取它的内容作为stored_code
+        if os.path.exists(PYGAME_FILE):
+            with open(PYGAME_FILE, 'r') as f:
+                self.stored_code = f.read()
+        else:
+            self.stored_code = self.initial_code
+            
+        self.current_process = None
         
     def run(self, code: str, code_type: str):
         if 'pygame' in code:
+            # 先终止所有现有的pygame进程
+            kill_pygame()
+            
             # 如果有正在运行的进程，先终止它
             if self.current_process is not None:
                 self.current_process.terminate()
                 self.current_process.join()
             
             # 将新代码添加到存储的代码中
-            self.stored_code += "\n" + code
+            self.stored_code = code
             
             # 创建固定位置的文件来运行pygame代码
             with open(PYGAME_FILE, 'w') as f:
                 f.write("""
 import pygame
 import sys
+import os
 
 """ + self.stored_code + """
 
 # 添加事件处理
 running = True
 clock = pygame.time.Clock()
+dragging = False
+drag_offset_x = 0
+drag_offset_y = 0
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:  # 左键点击
+                dragging = True
+                mouse_x, mouse_y = event.pos
+                window_x, window_y = pygame.display.get_window_position()
+                drag_offset_x = window_x - mouse_x
+                drag_offset_y = window_y - mouse_y
+        elif event.type == pygame.MOUSEBUTTONUP:
+            if event.button == 1:  # 左键释放
+                dragging = False
+        elif event.type == pygame.MOUSEMOTION:
+            if dragging:  # 如果正在拖动
+                mouse_x, mouse_y = event.pos
+                new_x = mouse_x + drag_offset_x
+                new_y = mouse_y + drag_offset_y
+                os.environ['SDL_VIDEO_WINDOW_POS'] = f"{new_x},{new_y}"
+                pygame.display.set_mode((800, 600), pygame.NOFRAME)  # 重新创建窗口以更新位置
     
     # 更新屏幕
     pygame.display.flip()
@@ -101,8 +141,7 @@ pygame.quit()
                 args=(PYGAME_FILE,)
             )
             self.current_process.start()
-            # 不等待进程结束
-            return f"Pygame程序已在新进程中启动，代码保存在: {PYGAME_FILE}"
+            return f"Pygame程序已在新进程中启动"
         else:
             return super().run(code, code_type)
 
@@ -121,10 +160,21 @@ def main():
             
             # 构建包含历史代码的消息
             message = ""
-            if interpreter.stored_code.strip():
-                message = "以下是之前的代码:\n```python\n" + interpreter.stored_code + "\n```\n\n"
-                message += "请在这个代码基础上,不破坏之前的功能前提下.增加以下需求:\n"
+            if os.path.exists(PYGAME_FILE):
+                with open(PYGAME_FILE, 'r') as f:
+                    current_code = f.read()
+                    # 提取主要代码部分（去掉import和事件循环部分）
+                    code_lines = current_code.split('\n')
+                    main_code = []
+                    for line in code_lines:
+                        if not line.strip().startswith(('import', 'running =', 'clock =', 'while', 'for event', 'pygame.display.flip()', 'clock.tick', '# 清理', 'pygame.quit()')):
+                            main_code.append(line)
+                    message = "以下是之前的代码:\n```python\n" + '\n'.join(main_code) + "\n```\n\n"
+                    message += "请在这个代码基础上,不破坏之前的功能前提下.增加以下需求:\n"
             message += user_input
+            
+            print(message)
+            print("以上是历史代码==========")
             
             # 创建消息并获取响应
             usr_msg = bm.make_user_message(
@@ -138,8 +188,6 @@ def main():
         except KeyboardInterrupt:
             print("\n程序已终止")
             break
-        except Exception as e:
-            print(f"\n发生错误: {e}")
 
 if __name__ == '__main__':
     main()
