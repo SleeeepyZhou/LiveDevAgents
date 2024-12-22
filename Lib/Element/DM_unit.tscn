@@ -1,0 +1,109 @@
+[gd_scene load_steps=2 format=3 uid="uid://wyb7ltv0hfm0"]
+
+[ext_resource type="Script" path="res://Lib/Element/dm_unit.gd" id="1_m41db"]
+
+[node name="DMUnit" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_m41db")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "ID:"
+vertical_alignment = 1
+
+[node name="ID" type="Label" parent="."]
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "TestID"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="AuthorBox" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+alignment = 1
+
+[node name="Privilege" type="Label" parent="AuthorBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "非舰队"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Medal" type="Label" parent="AuthorBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "徽章"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="Level" type="Label" parent="AuthorBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "lv 0"
+horizontal_alignment = 1
+
+[node name="GiftBox" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+alignment = 1
+
+[node name="Weight" type="SpinBox" parent="GiftBox"]
+layout_mode = 2
+allow_greater = true
+alignment = 1
+select_all_on_focus = true
+
+[node name="Gift" type="Label" parent="GiftBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+vertical_alignment = 1
+
+[node name="Price" type="PanelContainer" parent="GiftBox"]
+layout_mode = 2
+
+[node name="GiftPrice" type="SpinBox" parent="GiftBox/Price"]
+layout_mode = 2
+allow_greater = true
+alignment = 1
+editable = false
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "说："
+vertical_alignment = 1
+
+[node name="Chat" type="TextEdit" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_readonly_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "示例文本示例文本示例文本"
+editable = false
+wrap_mode = 1
+autowrap_mode = 2
+scroll_fit_content_height = true
+
+[node name="Send" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "回复"
+
+[connection signal="pressed" from="Send" to="." method="_on_send_pressed"]

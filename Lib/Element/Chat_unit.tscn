@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://7k78j73pwdta"]
+
+[ext_resource type="Script" path="res://Lib/Element/chat_unit.gd" id="1_ly5qd"]
+
+[node name="ChatUnit" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_ly5qd")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "User"
+
+[node name="TextEdit" type="TextEdit" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_override_colors/font_readonly_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "示例发言示例发言示例发言示例发言示例发言示例发言示例发言示例发言示例发言示例发言示例发言示例发言示例发言示例发言示例发言示例发言示例发言示例发言"
+editable = false
+wrap_mode = 1
+autowrap_mode = 2
+scroll_fit_content_height = true

@@ -145,49 +145,54 @@ pygame.quit()
         else:
             return super().run(code, code_type)
 
-def main():
+def create_game_from_prompt(command : str):
+    r"""This function will generate a game through commands for users to use and test.
+
+    Args:
+        command (str): The command string to create game.
+
+    Example:
+        >>> command = "制作一个游戏场景，玩家可以通过方向键进行移动"
+    """
     # 创建interpreter实例来保存代码历史
     interpreter = MyInterpreter()
     
-    while True:
-        try:
-            user_input = input("\n请输入您的指令 (输入'quit'退出): ")
-            if user_input.lower() == 'quit':
-                break
+    try:
+        user_input = command
+        # if user_input.lower() == 'quit':
+        #     break
 
-            # 每次都创建新的agent
-            agent = create_agent()
-            
-            # 构建包含历史代码的消息
-            message = ""
-            if os.path.exists(PYGAME_FILE):
-                with open(PYGAME_FILE, 'r') as f:
-                    current_code = f.read()
-                    # 提取主要代码部分（去掉import和事件循环部分）
-                    code_lines = current_code.split('\n')
-                    main_code = []
-                    for line in code_lines:
-                        if not line.strip().startswith(('import', 'running =', 'clock =', 'while', 'for event', 'pygame.display.flip()', 'clock.tick', '# 清理', 'pygame.quit()')):
-                            main_code.append(line)
-                    message = "以下是之前的代码:\n```python\n" + '\n'.join(main_code) + "\n```\n\n"
-                    message += "请在这个代码基础上,不破坏之前的功能前提下.增加以下需求:\n"
-            message += user_input
-            
-            print(message)
-            print("以上是历史代码==========")
-            
-            # 创建消息并获取响应
-            usr_msg = bm.make_user_message(
-                role_name='user',
-                content=message)
+        # 每次都创建新的agent
+        agent = create_agent()
+        
+        # 构建包含历史代码的消息
+        message = ""
+        if os.path.exists(PYGAME_FILE):
+            with open(PYGAME_FILE, 'r') as f:
+                current_code = f.read()
+                # 提取主要代码部分（去掉import和事件循环部分）
+                code_lines = current_code.split('\n')
+                main_code = []
+                for line in code_lines:
+                    if not line.strip().startswith(('import', 'running =', 'clock =', 'while', 'for event', 'pygame.display.flip()', 'clock.tick', '# 清理', 'pygame.quit()')):
+                        main_code.append(line)
+                message = "以下是之前的代码:\n```python\n" + '\n'.join(main_code) + "\n```\n\n"
+                message += "请在这个代码基础上,不破坏之前的功能前提下.增加以下需求:\n"
+        message += user_input
+        
+        print(message)
+        print("以上是历史代码==========")
+        
+        # 创建消息并获取响应
+        usr_msg = bm.make_user_message(
+            role_name='user',
+            content=message)
 
-            response = agent.step(usr_msg)
-            print("\n助手回复:")
-            print(response.msg.content)
-                
-        except KeyboardInterrupt:
-            print("\n程序已终止")
-            break
+        response = agent.step(usr_msg)
+        print("\n助手回复:")
+        print(response.msg.content)
+            
+    except KeyboardInterrupt:
+        print("\n程序已终止")
+        # break
 
-if __name__ == '__main__':
-    main()

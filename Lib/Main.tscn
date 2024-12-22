@@ -1,0 +1,184 @@
+[gd_scene load_steps=4 format=3 uid="uid://ceaysajhsnwkb"]
+
+[ext_resource type="Script" path="res://Lib/main.gd" id="1_lkuwi"]
+[ext_resource type="Script" path="res://Lib/captions.gd" id="2_suxt3"]
+
+[sub_resource type="Theme" id="Theme_epphh"]
+MarginContainer/constants/margin_bottom = 10
+MarginContainer/constants/margin_left = 10
+MarginContainer/constants/margin_right = 10
+MarginContainer/constants/margin_top = 0
+
+[node name="Main" type="MarginContainer"]
+offset_right = 1400.0
+offset_bottom = 800.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_epphh")
+script = ExtResource("1_lkuwi")
+
+[node name="Captions" type="Window" parent="."]
+disable_3d = true
+transparent_bg = true
+initial_position = 1
+size = Vector2i(1000, 100)
+visible = false
+transient = true
+unresizable = true
+transparent = true
+script = ExtResource("2_suxt3")
+
+[node name="Captions" type="CenterContainer" parent="Captions"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Captions/Captions"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.713726, 0.756863, 1)
+theme_override_font_sizes/font_size = 50
+text = "示例文字"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Split" type="HSplitContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+split_offset = 800
+
+[node name="DMBox" type="PanelContainer" parent="Split"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+
+[node name="Box" type="MarginContainer" parent="Split/DMBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 60
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 60
+
+[node name="Box" type="ScrollContainer" parent="Split/DMBox/Box"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="Refresh" type="Timer" parent="Split/DMBox/Box/Box"]
+wait_time = 2.0
+autostart = true
+
+[node name="Box" type="VBoxContainer" parent="Split/DMBox/Box/Box"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 2
+
+[node name="ButtonBox" type="MarginContainer" parent="Split/DMBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 20
+
+[node name="Box" type="VBoxContainer" parent="Split/DMBox/ButtonBox"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Box" type="HBoxContainer" parent="Split/DMBox/ButtonBox/Box"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Connect" type="Button" parent="Split/DMBox/ButtonBox/Box/Box"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Connect"
+
+[node name="RefreshDM" type="Button" parent="Split/DMBox/ButtonBox/Box/Box"]
+layout_mode = 2
+text = "RefreshDM"
+
+[node name="Caption" type="CheckButton" parent="Split/DMBox/ButtonBox/Box/Box"]
+layout_mode = 2
+text = "Caption"
+
+[node name="ChatBox" type="MarginContainer" parent="Split"]
+layout_mode = 2
+
+[node name="Box" type="VBoxContainer" parent="Split/ChatBox"]
+layout_mode = 2
+
+[node name="Chat" type="PanelContainer" parent="Split/ChatBox/Box"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Box" type="MarginContainer" parent="Split/ChatBox/Box/Chat"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 50
+
+[node name="Box" type="ScrollContainer" parent="Split/ChatBox/Box/Chat/Box"]
+layout_mode = 2
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="Box" type="VBoxContainer" parent="Split/ChatBox/Box/Chat/Box/Box"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="ButtonBox" type="MarginContainer" parent="Split/ChatBox/Box/Chat"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 20
+
+[node name="Box" type="VBoxContainer" parent="Split/ChatBox/Box/Chat/ButtonBox"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Timer" type="Timer" parent="Split/ChatBox/Box/Chat/ButtonBox/Box"]
+wait_time = 180.0
+autostart = true
+
+[node name="Save" type="Button" parent="Split/ChatBox/Box/Chat/ButtonBox/Box"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+text = "Save"
+
+[node name="Send" type="MarginContainer" parent="Split/ChatBox/Box"]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="Box" type="HBoxContainer" parent="Split/ChatBox/Box/Send"]
+layout_mode = 2
+
+[node name="Prompt" type="LineEdit" parent="Split/ChatBox/Box/Send/Box"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Auto" type="CheckBox" parent="Split/ChatBox/Box/Send/Box"]
+layout_mode = 2
+button_pressed = true
+text = "Auto"
+
+[node name="Ask" type="CheckBox" parent="Split/ChatBox/Box/Send/Box"]
+layout_mode = 2
+text = "Ask"
+
+[node name="Send" type="Button" parent="Split/ChatBox/Box/Send/Box"]
+layout_mode = 2
+text = "Send"
+
+[connection signal="close_requested" from="Captions" to="Captions" method="_on_close_requested"]
+[connection signal="timeout" from="Split/DMBox/Box/Box/Refresh" to="." method="_on_refreshDM_timeout"]
+[connection signal="pressed" from="Split/DMBox/ButtonBox/Box/Box/Connect" to="." method="_on_connect_pressed"]
+[connection signal="pressed" from="Split/DMBox/ButtonBox/Box/Box/RefreshDM" to="." method="_on_refreshDM_timeout"]
+[connection signal="toggled" from="Split/DMBox/ButtonBox/Box/Box/Caption" to="." method="_on_caption_toggled"]
+[connection signal="timeout" from="Split/ChatBox/Box/Chat/ButtonBox/Box/Timer" to="." method="_auto_save"]
+[connection signal="pressed" from="Split/ChatBox/Box/Chat/ButtonBox/Box/Save" to="." method="_auto_save"]
+[connection signal="text_submitted" from="Split/ChatBox/Box/Send/Box/Prompt" to="." method="_on_prompt_submitted"]
+[connection signal="pressed" from="Split/ChatBox/Box/Send/Box/Send" to="." method="_on_send_pressed"]
