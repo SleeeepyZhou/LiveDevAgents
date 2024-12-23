@@ -1,6 +1,7 @@
 ./.mul_agents/venv/
 .godot/
 *.import
+./.mul_agents/pygame_current.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -172,3 +173,4 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+.mul_agents/pygame_current.py

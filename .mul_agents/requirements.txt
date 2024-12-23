@@ -1,6 +1,7 @@
 camel-ai[all]==0.2.15a0
 pygame>=2.5.2
 
+flask
 fastapi
 uvicorn
 pyaudio

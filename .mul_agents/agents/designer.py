@@ -40,3 +40,7 @@ designer = ChatAgent(
     message_window_size=20, # [Optional] the length for chat memory
     output_language = 'Chinese'
 )
+
+def ask_designer(prompt : str):
+    response = designer.step(prompt)
+    return response.msgs[0].content
