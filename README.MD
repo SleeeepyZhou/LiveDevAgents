@@ -2,6 +2,14 @@
 
 本项目使用[CAMEL](https://github.com/camel-ai/camel)构建。2024.12 CAMEL-AI Hackathon项目。
 
+使用多个不同专长Agent组成专家团队，将简单想法进行扩充、拆解、输出、实现，实时更新运行并自迭代纠错。
+可在直播时由弹幕实时命令生成游戏，并与AI主播进行互动。
+
+<div style="text-align: center;">
+  <img src="./assets/live1.jpg" height="500">
+</div>
+
+
 Developers: [Rex](https://space.bilibili.com/24628962/), [SleeeepyZhou](https://space.bilibili.com/360375877), [Stargaze](https://space.bilibili.com/453898404)
 
 ## Todo
@@ -10,6 +18,7 @@ Developers: [Rex](https://space.bilibili.com/24628962/), [SleeeepyZhou](https://
 - [ ] 完善直播中控，支持更多平台
 - [ ] 迁移主播Agent，目前仍在使用旧框架
 - [ ] 完善弹幕处理逻辑
+- [ ] VR共享工作空间，多人讨论，自动开发
 
 ## Start
 
@@ -25,10 +34,15 @@ pip install -r requirements.txt
 
 请将此json文件内容对应键值改为自己的apikey，并将文件改名为`key.json`
 
-![](./assets/key_example.png)
+<div style="text-align: center;">
+  <img src="./assets/key_example.png" width="300">
+</div>
 
 ### Gradio demo
-![](./assets/gradio_demo.png)
+
+<div style="text-align: center;">
+  <img src="./assets/gradio_demo.png" width="600">
+</div>
 
 配置好环境后，先启动`programmer.py`，再启动`gradio_demo.py`。
 
@@ -38,4 +52,6 @@ pip install -r requirements.txt
 
 ##### 仍在开发中
 
-![](./assets/live.png)
+<div style="text-align: center;">
+  <img src="./assets/live.png" width="600">
+</div>

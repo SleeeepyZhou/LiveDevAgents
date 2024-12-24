@@ -1,6 +1,8 @@
 # 直播中控
 
-由Godot构建，使用 [BliveChat](https://github.com/xfgryujk/blivechat) on GitHub。
+由[Godot](https://github.com/godotengine/godot)构建，使用 [BliveChat](https://github.com/xfgryujk/blivechat) 获取弹幕信息。
+
+仍在开发，暂时不提供应用程序，建议使用Godot4.3打开此project。
 
 ## BliveChat 的弹幕转发插件
 
