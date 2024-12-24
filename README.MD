@@ -1,4 +1,4 @@
-# Agent 弹幕游戏开发引擎
+# Multi-Agent danmaku game engine
 
 本项目使用[CAMEL](https://github.com/camel-ai/camel)构建。2024.12 CAMEL-AI Hackathon项目。
 
@@ -16,9 +16,12 @@ Developers: [Rex](https://space.bilibili.com/24628962/), [SleeeepyZhou](https://
 克隆仓库
 `git clone https://github.com/SleeeepyZhou/LiveDevAgents.git`
 
-安装依赖
-`cd LiveDevAgents`
-`pip install -r requirements.txt`
+安装依赖，建议使用虚拟环境
+```
+cd LiveDevAgents
+python -m venv venv
+pip install -r requirements.txt
+```
 
 请将此json文件内容对应键值改为自己的apikey，并将文件改名为`key.json`
 
