@@ -14,10 +14,14 @@ from camel.toolkits import FunctionTool, SearchToolkit
 from camel.types import ModelPlatformType, ModelType
 from camel.societies.workforce import Workforce
 
+import json
+with open('key.json', 'r') as f:
+    config = json.load(f)
+
 coordinator_model = ModelFactory.create(
     model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
     model_type="Qwen/Qwen2.5-32B-Instruct",
-    api_key="***REMOVED***",
+    api_key=config['modelscope_apikey'],
     url="https://api-inference.modelscope.cn/v1",
     model_config_dict=QwenConfig(temperature=0.2).as_dict(),
 )
@@ -25,7 +29,7 @@ coordinator_model = ModelFactory.create(
 task_agent_model = ModelFactory.create(
     model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
     model_type="Qwen/Qwen2.5-32B-Instruct",
-    api_key="***REMOVED***",
+    api_key=config['modelscope_apikey'],
     url="https://api-inference.modelscope.cn/v1",
     model_config_dict=QwenConfig(temperature=0.2).as_dict(),
 )
@@ -37,7 +41,7 @@ function_list = [
 new_agent_model = ModelFactory.create(
     model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
     model_type="Qwen/Qwen2.5-32B-Instruct",
-    api_key="***REMOVED***",
+    api_key=config['modelscope_apikey'],
     url="https://api-inference.modelscope.cn/v1",
     model_config_dict=QwenConfig(temperature=0.2).as_dict(),
 )

@@ -2,10 +2,14 @@ from camel.configs import QwenConfig
 from camel.models import ModelFactory
 from camel.types import ModelPlatformType
 
+import json
+with open('key.json', 'r') as f:
+    config = json.load(f)
+
 qwen_model = ModelFactory.create(
     model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
     model_type="Qwen/Qwen2.5-32B-Instruct",
-    api_key="***REMOVED***",
+    api_key=config['modelscope_apikey'],
     url="https://api-inference.modelscope.cn/v1",
     model_config_dict=QwenConfig(temperature=0.2).as_dict(),
 )

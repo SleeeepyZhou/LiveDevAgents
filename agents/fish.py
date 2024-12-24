@@ -1,6 +1,11 @@
 from camel.models import FishAudioModel
+
 import os
-os.environ["FISHAUDIO_API_KEY"] = "***REMOVED***"
+import json
+with open('key.json', 'r') as f:
+    config = json.load(f)
+os.environ["FISHAUDIO_API_KEY"] = config['fish_key']
+
 audio_models = FishAudioModel()
 def s2t(audio_file_path: str):
     return audio_models.speech_to_text(audio_file_path)

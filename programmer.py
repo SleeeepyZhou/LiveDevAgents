@@ -12,7 +12,6 @@ import pygame
 import multiprocessing
 
 import json
-
 with open('key.json', 'r') as f:
     config = json.load(f)
 qwen_key = config['qwen_api_key']
