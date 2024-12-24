@@ -1,5 +1,7 @@
 venv/
 .godot/
+release/
+
 *.import
 pygame_current.py
 key.json
