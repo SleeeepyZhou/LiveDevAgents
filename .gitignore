@@ -2,6 +2,7 @@ venv/
 .godot/
 *.import
 pygame_current.py
+key.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
