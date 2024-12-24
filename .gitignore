@@ -1,7 +1,7 @@
-./.mul_agents/venv/
+venv/
 .godot/
 *.import
-./.mul_agents/pygame_current.py
+pygame_current.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
