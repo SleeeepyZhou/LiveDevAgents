@@ -1,0 +1,8 @@
+{
+  "name": "消息转发",
+  "version": "1.0.0",
+  "author": "sleeeepyzhou",
+  "description": "把收到的消息转为特定格式后转发至ws://127.0.0.1:8848/dm/{user}。发布地址：https://github.com/SleeeepyZhou/LiveDevAgents/tree/main/contorl/relay_plugin",
+  "run": "cd ../../.. & python dmji.py",
+  "enabled": true
+}

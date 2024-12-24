@@ -38,7 +38,7 @@ def create_agent():
         tool_agents=None,
         model=model,
         code_interpreter=interpreter,
-        verbose=1
+        verbose=0
     )
 
 def run_pygame_file(file_path):
@@ -50,6 +50,8 @@ def kill_pygame():
     """终止所有pygame相关的进程"""
     if sys.platform == 'darwin':  # macOS
         os.system("pkill -f pygame_current.py")
+    elif sys.platform == 'win32':  # Windows
+        os.system("taskkill /F /FI \"IMAGENAME eq python.exe\" /FI \"WINDOWTITLE eq pygame_current.py\"")
 
 class MyInterpreter(SubprocessInterpreter):
     def __init__(self):
@@ -111,7 +113,9 @@ pygame.quit()
                 # 创建固定位置的文件来运行pygame代码
                 with open(PYGAME_FILE, 'w') as f:
                     # 写入基础框架代码
-                    f.write("""import pygame
+                    f.write("""
+# -*- coding: gbk -*-
+import pygame
 import sys
 import random
 
@@ -220,7 +224,7 @@ def main():
                         if not line.strip().startswith(('import', 'running =', 'clock =', 'while', 'for event', 'pygame.display.flip()', 'clock.tick', '# 清理', 'pygame.quit()')):
                             main_code.append(line)
                     message = "以下是之前的代码:\n```python\n" + '\n'.join(main_code) + "\n```\n\n"
-                    message += "请在这个代码基础上,所有的移动速度都要保持帧率稳定.如果需要图像资源,其在res文件夹下,不破坏之前的功能前提下.增加以下需求:\n"
+                    message += "请在这个代码基础上,所有的移动速度都要保持帧率稳定.如果需要图像资源,其在./res/文件夹下.不破坏之前的功能前提下.增加以下需求:\n"
             message += user_input
             
             #print(message)

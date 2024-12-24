@@ -155,8 +155,7 @@ var asking := false # 回复线程
 var send_list : Array = [] # 回复队列
 func send(text : String, is_ask : bool, retell : String = ""):
 	var new_task = [text, is_ask, retell]
-	programer(retell)
-	#send_list.append(new_task)
+	send_list.append(new_task)
 
 # 回复请求
 func post(text : String, is_ask : bool, retell : String):
@@ -202,7 +201,11 @@ func read_sendlist():
 		return
 	if !send_list.is_empty():
 		var current_ask = send_list.pop_front()
-		post(current_ask[0],current_ask[1],current_ask[2])
+		var origin : String = current_ask[2]
+		if origin.begins_with("@P"):
+			programer(origin)
+		else:
+			post(current_ask[0],current_ask[1],current_ask[2])
 	elif auto.button_pressed and has_newdm:
 		auto_send()
 
