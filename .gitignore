@@ -1,3 +1,11 @@
+venv/
+.godot/
+release/
+
+*.import
+pygame_current.py
+key.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -14,7 +22,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
 lib64/
 parts/
 sdist/
@@ -169,3 +176,4 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+.mul_agents/pygame_current.py

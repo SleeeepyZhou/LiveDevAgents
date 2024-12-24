@@ -20,7 +20,7 @@ def create_agent():
     model = ModelFactory.create(
         model_platform=ModelPlatformType.QWEN,
         model_type=ModelType.QWEN_TURBO,
-        api_key = ***REMOVED***,
+        api_key = "sk-e3fbfded802a4cda95d8d9d1dbaea8a8",
         url = 'https://dashscope.aliyuncs.com/compatible-mode/v1',
     )
 

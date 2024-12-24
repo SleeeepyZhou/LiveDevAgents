@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://p6p01k6uh844"]
+
+[ext_resource type="Script" path="res://test.gd" id="1_v2dbe"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_v2dbe")
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 464.0
+offset_top = 46.0
+offset_right = 895.0
+offset_bottom = 174.0
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 147.0
+offset_top = 115.0
+offset_right = 303.0
+offset_bottom = 214.0
+text = "l"
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 147.0
+offset_top = 280.0
+offset_right = 303.0
+offset_bottom = 379.0
+text = "c"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]
