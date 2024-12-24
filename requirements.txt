@@ -2,9 +2,11 @@ tinysegmenter
 
 camel-ai[all]==0.2.15a0
 pygame>=2.5.2
-
-requests
 flask
+
+gradio
+requests
+
 fastapi
 uvicorn
 pyaudio

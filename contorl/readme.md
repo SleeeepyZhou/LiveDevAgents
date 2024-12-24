@@ -1,6 +1,6 @@
 # 直播中控
 
-由Godot构建
+由Godot构建，使用BliveChat。
 
 ## BliveChat 的弹幕转发插件
 
