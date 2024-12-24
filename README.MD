@@ -15,9 +15,10 @@ Developers: [Rex](https://space.bilibili.com/24628962/), [SleeeepyZhou](https://
 ## Todo
 
 - [ ] 完善workforce，以处理信息噪声，给出更有效信息
-- [ ] 完善直播中控，支持更多平台
 - [ ] 迁移主播Agent，目前仍在使用旧框架
 - [ ] 完善弹幕处理逻辑
+- [ ] 完善直播中控，支持更多平台
+- [ ] 接入美术、音乐等Agent
 - [ ] VR共享工作空间，多人讨论，自动开发
 
 ## Start
