@@ -11,6 +11,12 @@ import sys
 import pygame
 import multiprocessing
 
+import json
+
+with open('key.json', 'r') as f:
+    config = json.load(f)
+qwen_key = config['qwen_api_key']
+
 # 获取当前文件所在目录
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 PYGAME_FILE = os.path.join(CURRENT_DIR, 'pygame_current.py')
@@ -20,7 +26,7 @@ def create_agent():
     model = ModelFactory.create(
         model_platform=ModelPlatformType.QWEN,
         model_type=ModelType.QWEN_TURBO,
-        api_key = "***REMOVED***",
+        api_key = qwen_key,
         url = 'https://dashscope.aliyuncs.com/compatible-mode/v1',
     )
 
