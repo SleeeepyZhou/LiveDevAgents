@@ -14,7 +14,6 @@ import pyaudio
 import wave
 import threading
 
-# 录音参数
 FORMAT = pyaudio.paInt16  # 采样位数
 CHANNELS = 1              # 单声道
 RATE = 44100              # 采样率
@@ -71,9 +70,9 @@ def convert_to_text():
     text = s2t(WAVE_OUTPUT_FILENAME)
     return text
 
-if __name__ == "__main__":
-    start_recording()
-    import time
-    time.sleep(RECORD_SECONDS)
-    text = convert_to_text()
-    print("转换后的文本:", text)
+# if __name__ == "__main__":
+#     start_recording()
+#     import time
+#     time.sleep(RECORD_SECONDS)
+#     text = convert_to_text()
+#     print(text)

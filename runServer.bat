@@ -1,6 +1,6 @@
 @echo off
 
-./venv/Script/activate
+.\venv\Scripts\activate
 start python programmer.py
 @REM start python main.py
 

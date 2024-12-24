@@ -116,10 +116,9 @@ pygame.quit()
                 self.stored_code = code
                 
                 # 创建固定位置的文件来运行pygame代码
-                with open(PYGAME_FILE, 'w') as f:
+                with open(PYGAME_FILE, 'w', encoding='utf-8') as f:
                     # 写入基础框架代码
                     f.write("""
-# -*- coding: gbk -*-
 import pygame
 import sys
 import random
