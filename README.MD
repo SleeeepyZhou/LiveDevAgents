@@ -39,6 +39,14 @@ pip install -r requirements.txt
   <img src="./assets/key_example.png" width="300">
 </div>
 
+### CLI demo
+
+安装完成后`python cli_demo.py`可以直接使用命令行直接使用。
+
+<div style="text-align: center;">
+  <img src="./assets/cli_demo.png" width="600">
+</div>
+
 ### Gradio demo
 
 <div style="text-align: center;">
