@@ -94,7 +94,7 @@ pygame.quit()
 """
         # 如果pygame文件存在，读取它的内容作为stored_code
         if os.path.exists(PYGAME_FILE):
-            with open(PYGAME_FILE, 'r') as f:
+            with open(PYGAME_FILE, 'r', encoding='utf-8') as f:
                 self.stored_code = f.read()
         else:
             self.stored_code = self.initial_code
@@ -119,6 +119,7 @@ pygame.quit()
                 with open(PYGAME_FILE, 'w', encoding='utf-8') as f:
                     # 写入基础框架代码
                     f.write("""
+# -*- coding: utf-8 -*-
 import pygame
 import sys
 import random
@@ -165,7 +166,7 @@ finally:
                 # 等待一小段时间检查进程是否正常启动
                 import time
                 time.sleep(0.5)
-                
+
                 if not self.current_process.is_alive():
                     # 如果进程已经结束，说明出现了错误
                     return "ERROR: 代码执行失败，需要重新生成代码"
@@ -190,6 +191,7 @@ from queue import Queue
 
 input_queue = Queue()
 
+is_running = False
 app = Flask(__name__)
 @app.route('/execute', methods=['POST'])
 def execute_code():
@@ -200,16 +202,26 @@ def execute_code():
     input_queue.put(user_input)
     return jsonify({"message": "Command received"}), 200
 
+@app.route('/status', methods=['GET'])
+def get_status():
+    global is_running
+    if is_running:
+        return 'System Status: OK', 200
+    else:
+        return 'System Status: NO', 500
+
 import threading
 
 def main():
+    global is_running
     # 创建interpreter实例来保存代码历史
     interpreter = MyInterpreter()
-    
     while True:
         try:
+            is_running = False
             user_input = input_queue.get()
-            
+            is_running = True
+
             if user_input.lower() == 'quit':
                 break
 
@@ -219,7 +231,7 @@ def main():
             # 构建包含历史代码的消息
             message = ""
             if os.path.exists(PYGAME_FILE):
-                with open(PYGAME_FILE, 'r') as f:
+                with open(PYGAME_FILE, 'r', encoding='utf-8') as f:
                     current_code = f.read()
                     # 提取主要代码部分（去掉import和事件循环部分）
                     code_lines = current_code.split('\n')

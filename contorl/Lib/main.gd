@@ -28,6 +28,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	DM_ji()
 	read_sendlist()
+	todolist()
 
 # 错误提示
 func new_tip(text : String):
@@ -101,17 +102,33 @@ func DM_ji():
 
 
 ## 回复
-func programer(prompt : String):
+func programer(command : String):
+	is_program = true
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
 	http_request.timeout = 10
 	var head : PackedStringArray = ["Content-Type: application/json"]
-	var data = JSON.stringify({"command": prompt})
+	var data = JSON.stringify({"command": command})
 	http_request.request("http://127.0.0.1:5000/execute", head, HTTPClient.METHOD_POST, data)
 	var r = await http_request.request_completed
 	if r[1] == 200:
 		r = r[-1].get_string_from_utf8()
 		print(r)
+	http_request.queue_free()
+	is_program = false
+
+var is_program = false
+var todo : Array[String] = []
+func todolist():
+	if todo.is_empty() or is_program:
+		return
+	var http_request = HTTPRequest.new()
+	add_child(http_request)
+	http_request.request("http://127.0.0.1:5000/status")
+	var r = await http_request.request_completed
+	if r[1] == 500 and !todo.is_empty():
+		var current = todo.pop_front()
+		programer(current)
 	http_request.queue_free()
 
 # 手动回复
@@ -145,8 +162,7 @@ func auto_send():
 		for dm_v in dm_list:
 			tempf += dm_v.y
 			if tempf > r:
-				@warning_ignore("narrowing_conversion")
-				target = dm_v.x
+				target = int(dm_v.x)
 				break
 		DMBox.get_child(target)._on_send_pressed()
 
@@ -203,7 +219,9 @@ func read_sendlist():
 		var current_ask = send_list.pop_front()
 		var origin : String = current_ask[2]
 		if origin.begins_with("@P"):
-			programer(origin)
+			var input = origin.substr(2)
+			todo.append(input)
+			send("程序："+input,false,"")
 		else:
 			post(current_ask[0],current_ask[1],current_ask[2])
 	elif auto.button_pressed and has_newdm:
