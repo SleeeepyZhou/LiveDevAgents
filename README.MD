@@ -5,17 +5,17 @@
 使用多个不同专长Agent组成专家团队，将简单想法进行扩充、拆解、输出、实现，实时更新运行并自迭代纠错。
 可在直播时由弹幕实时命令生成游戏，并与AI主播进行互动。
 
-<div style="text-align: center;">
-  <figure>
+<div style="text-align: center; display: flex; justify-content: center; align-items: center;">
+  <div>
     <img src="./assets/live1.jpg" height="500">
-    <figcaption>直播演示画面</figcaption>
-  </figure>
-  <figure>
+    <figcaption>直播画面</figcaption>
+  </div>
+  <div>
     <video height="500" controls>
-      <source src="https://sns-video-bd.xhscdn.com/stream/79/110/4/01e76ae9002da1340103700393f9c05aff_4.mp4 " type="video/mp4">
+      <source src="https://sns-video-bd.xhscdn.com/stream/79/110/4/01e76ae9002da1340103700393f9c05aff_4.mp4" type="video/mp4">
     </video>
     <figcaption>视频介绍</figcaption>
-  </figure>
+  </div>
 </div>
 
 
