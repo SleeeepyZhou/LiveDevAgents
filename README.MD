@@ -69,3 +69,5 @@ pip install -r requirements.txt
 <div style="text-align: center;">
   <img src="./assets/live.png" width="600">
 </div>
+
+[<img src="https://api.gitsponsors.com/api/badge/img?id=906664817" height="20">](https://api.gitsponsors.com/api/badge/link?p=+VecGkajmpkiIcHYJzIW3c2AWEa+wYu0FQ1z3Z/+WQK4h2p/XEtBJa6b5zkao40V)
